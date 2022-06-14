@@ -6,27 +6,27 @@
  *          Luiz Guilherme Almas Araujo: 201676050
  */
 
-package Componentes;
+package componentes;
 import java.util.LinkedList;
 
-public class AFD {
-	private LinkedList<Estado> afd;
+public class AFN {
+	private LinkedList<Estado> afn;
         private String nome;
-	
-        /**
-         * Construtor da classe.
+        
+	/**
+         * Contrutor da classe.
          */
-	public AFD () {
-		this.setAFD(new LinkedList<Estado> ());
-		this.getAFD().clear();
+	public AFN () {
+		this.setAFN(new LinkedList<Estado> ());
+		this.getAFN().clear();
 	}
 
-	public LinkedList<Estado> getAFD() {
-		return afd;
+	public LinkedList<Estado> getAFN() {
+		return afn;
 	}
 
-	public void setAFD(LinkedList<Estado> afd) {
-		this.afd = afd;
+	public void setAFN(LinkedList<Estado> afn) {
+		this.afn = afn;
 	}
         
         public void setNome(String nome){
@@ -37,4 +37,3 @@ public class AFD {
             return this.nome;
         }
 }
-//luizalmas

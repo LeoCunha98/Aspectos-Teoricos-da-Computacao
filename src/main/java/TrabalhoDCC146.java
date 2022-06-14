@@ -1,4 +1,4 @@
-import Componentes.Menu;
+import componentes.Menu;
 
 /**
  * TRABALHO PRÁTICO - DCC146 ASPECTOS TEÓRICOS DA COMPUTAÇÃO 2022/1

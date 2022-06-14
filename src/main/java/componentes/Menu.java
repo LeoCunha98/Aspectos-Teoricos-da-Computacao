@@ -1,13 +1,13 @@
-/**
- * TRABALHO PRÁTICO - DCC146 ASPECTOS TEÓRICOS DA COMPUTAÇÃO 2022/1
- * Professor: GLEIPH GHIOTTO LIMA DE MENEZES
- * Autores: Leonardo Silva da Cunha: 201676019
- *          Juarez de Paula Campos Júnior: 201676022
- *          Luiz Guilherme Almas Araujo: 201676050
+/*
+  TRABALHO PRÁTICO - DCC146 ASPECTOS TEÓRICOS DA COMPUTAÇÃO 2022/1
+  Professor: GLEIPH GHIOTTO LIMA DE MENEZES
+  Autores: Leonardo Silva da Cunha: 201676019
+           Juarez de Paula Campos Júnior: 201676022
+           Luiz Guilherme Almas Araujo: 201676050
  */
 
 
-package Componentes;
+package componentes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,14 +15,16 @@ import java.util.Scanner;
 
 
 public class Menu {
+
+    private static String warningImplementacao = "[WARNING] - Função não implementada";
     
     //private String definicao;
     private static Scanner leitura = new Scanner(System.in);
-    private ArrayList<String> tagsMemoria = new ArrayList<String>();
+    private ArrayList<String> tagsMemoria = new ArrayList<>();
     private String cmd = "";
     private String caminho = "";
     private String entradaInformada = "";
-    private ArrayList<String> divisoesMemoria = new ArrayList<String>();
+    private ArrayList<String> divisoesMemoria = new ArrayList<>();
     ClassificaString cs = new ClassificaString();
     
     /**
@@ -49,29 +51,30 @@ public class Menu {
                 flag = false;
                 break;
             case ":d": 
-                // realiza a divisao em tags da string do arquivo informado
-                entradaParaDividirArq(this.caminho);
-                //System.out.println("[WARNING] - Função não implementada");
+//                realiza a divisao em tags da string do arquivo informado
+//                entradaParaDividirArq(this.caminho);
+                System.out.println(warningImplementacao);
                 break;
             case ":c":
                 definicoesDeTag(this.caminho);
                 break;                
             case ":o":
-                salvaDivisaoTags(this.caminho);
-                //System.out.println("[WARNING] - Função não implementada");
+//                salvaDivisaoTags(this.caminho);
+                System.out.println(warningImplementacao);
                 break;                
             case ":p":
-                //realiza a divisão em tags da entrada informada
-                entradaParaDividir();
-                //System.out.println("[WARNING] - Função não implementada");
+//                realiza a divisão em tags da entrada informada
+//                entradaParaDividir();
+                System.out.println(warningImplementacao);
                 break;
             case ":a":
-                //tagsParaAutomato();
-                geraAutomato();
+//                tagsParaAutomato();
+//                geraAutomato();
+                System.out.println(warningImplementacao);
                 break;
             case ":l":
-                for(int a = 0 ; a<this.tagsMemoria.size() ; a++){
-                    System.out.println(this.tagsMemoria.get(a));
+                for (String s : this.tagsMemoria) {
+                    System.out.println(s);
                 }
                 break;
             case ":s":
@@ -86,16 +89,16 @@ public class Menu {
     }
     
     /**
-     * Pega a Sring informada pelo usuário, manda para a classe Automato e lá e feita a divisão.
+     * Pega a String informada pelo usuário, manda para a classe Automato e lá e feita a divisão.
      * Recebe de volta a divisão em TAGs, apresenta para o usuário e também as prepara para gravação em arquivo.
      */
     private void entradaParaDividir(){
         //automato.divideEntrada(this.entradaInformada);
         ArrayList<String> divisoes = cs.divideString(this.entradaInformada);
         String divs = "";
-        for (int i=0;i<divisoes.size();i++){
-            divs = divs + divisoes.get(i) + " ";
-            
+        for (String divisoe : divisoes) {
+            divs = divs + divisoe + " ";
+
         }
         System.out.println(divs);
         divisoesMemoria.add(divs);
@@ -105,18 +108,18 @@ public class Menu {
      * Recebe Strings para divisão de um arquivo, cujo caminho foi informado pelo usuário.
      * Salva as expressões em um array, envia cada uma para divisão na classe Automato.
      * Recebe de volta as divisões em TAG, mostra para o usuário e as prepara para gravação em arquivo.
-     * @param caminho 
+     * @param caminho Caminho do arquivo
      */
     private void entradaParaDividirArq(String caminho){
         Arquivo arq = new Arquivo();
         ArrayList<String> expressoes = arq.getExpressao(caminho);
-        
-        for(int i=0; i<expressoes.size();i++){
-            if (expressoes.get(i) != null){
-                ArrayList<String> divisoes = cs.divideString(expressoes.get(i));
-                 String divs = "";
-                for (int j=0;j<divisoes.size();j++){
-                    divs = divs + divisoes.get(j) + " ";
+
+        for (String expressoe : expressoes) {
+            if (expressoe != null) {
+                ArrayList<String> divisoes = cs.divideString(expressoe);
+                String divs = "";
+                for (String divisoe : divisoes) {
+                    divs = divs + divisoe + " ";
 
                 }
                 System.out.println(divs);
@@ -134,21 +137,24 @@ public class Menu {
     }
     
     public void geraAutomato(){
-        GeraAutomato gera = new GeraAutomato();
-        for (int i=0; i< tagsMemoria.size();i++){
-            cs.adAFN(gera.geraAFN(tagsMemoria.get(i)));
+        for (String s : tagsMemoria) {
+            cs.adAFN(GeraAutomato.geraAFN(s));
         }
-        }
+    }
     
     /**
      * Função com objetivo de validar o comando passado ou se não for comando, será
      * considerado como uma tag.
-     * @return 
+     * @return true ou false para caso válido ou não.
      */
     private boolean entrada(){ // lê e entrada
         String linha = leitura.nextLine();
         String[] comando = linha.split(" ");
-        if(linha.charAt(0) == ' '){
+        if(linha.isEmpty()){
+            System.out.println("[INFO] - Nenhuma instrução enviada. Por favor digite alguma instrução!");
+            return entrada();
+        }
+        if(linha.charAt(0) == ' ' ){
             System.out.println("[ERRO] - Comando começou com espaço");
             return false;
         }else if(comando.length > 2){
@@ -168,51 +174,35 @@ public class Menu {
      * Função que tem o objetivo de reconhecer o comando e atribuir na variavel
      * 'cmd' e se caso, o comando for algum que é necessário de um caminho, o mesmo
      * atribui o caminho na variavel 'caminho'.
-     * @param comando
-     * @return 
+     * @param comando Comando de entrada
+     * @return  true ou false para caso válido ou não
      */
     private boolean validadeComando(String[] comando) {
-        if (!comando[0].equals(":d") // verifica a sintaxe do comando
-                && comando[0].equals(":c")
-                && comando[0].equals(":o")
-                && comando[0].equals(":p")//
-                && comando[0].equals(":a")
-                && comando[0].equals(":a")
-                && comando[0].equals(":l")
-                && comando[0].equals(":q")
-                && comando[0].equals(":s")) {
-            System.out.println("[ERRO] COMANDO INVALIDO");
-            return false;
-        }else{
-            if(comando.length == 1) { // verifica os comandos sem parametro
-                if(comando[0].equals(":a")) {
-                    this.cmd = comando[0];
-                    return true;
-                }else if(comando[0].equals(":l")){
-                    this.cmd = comando[0];
-                    return true;
-                }else if(comando[0].equals(":q")){
-                    this.cmd = comando[0];
-                    return true;
-                }
-                else{ // se uma comando que deveria ter um parametro veio sem o parametro
-                    
-                    System.out.println("[ERRO] CAMINHO NAO INFORMADO");
-                    return false;
-                    }
-                
-            }
-            else { //separa o comando do parametro
-                if (comando[0].equals(":p")){
-                        this.cmd = comando[0];
-                        this.entradaInformada = comando[1];
-                        return true;
-                } else {
+        if(comando.length == 1) { // verifica os comandos sem parametro
+            if(comando[0].equals(":a") || comando[0].equals(":l") || comando[0].equals(":q")) {
                 this.cmd = comando[0];
-                this.caminho = comando[1];
                 return true;
-                }
             }
+            else { // casos de comando sem paramêtro que não existem
+                System.out.println("[ERRO] COMANDO INVALIDO");
+                return false;
+            }
+        }
+        else { // separa o comando do parametro
+            if (comando[0].equals(":p")){
+                this.cmd = comando[0];
+                this.entradaInformada = comando[1];
+                return true;
+            } else
+                if (comando[0].equals(":d") || comando[0].equals(":c") || comando[0].equals(":o")
+                        || comando[0].equals(":s")) {
+                    this.cmd = comando[0];
+                    this.caminho = comando[1];
+                    return true;
+                } else { // casos de comando com paramêtro que não existem
+                    System.out.println("[ERRO] COMANDO INVALIDO");
+                    return false;
+                }
         }
     }
     
@@ -262,12 +252,10 @@ public class Menu {
 
         if (!this.tagsMemoria.isEmpty()) {
             if (!arq.existe(caminhoTag)) {
-                for (int i = 0; i < this.tagsMemoria.size(); i++)
-                    arq.setExpressao(this.tagsMemoria.get(i), caminhoTag);
+                for (String s : this.tagsMemoria) arq.setExpressao(s, caminhoTag);
                 System.out.println("[INFO] ARQUIVO CRIADO - TAGS ADICIONADAS.");
             } else {
-                for (int i = 0; i < this.tagsMemoria.size(); i++)
-                    arq.setExpressao(this.tagsMemoria.get(i), caminhoTag);
+                for (String s : this.tagsMemoria) arq.setExpressao(s, caminhoTag);
                 System.out.println("[INFO] ARQUIVO SOBRESCRITO COM NOVAS TAGS.");
             }
         } else {
@@ -279,7 +267,7 @@ public class Menu {
      * Função que tem com objetivo, verificar a tag que foi passada pelo usuario
      * é uma tag válida ou não. Se caso for válido, adiciona na memoria de execução 
      * do programa e se caso não, retorna uma mensagem de erro.
-     * @param tag 
+     * @param tag Tag que será adicionada a memória
      */
     private void adicionaTagMemoria(String tag) {
             ReconheceTag re = new ReconheceTag(tag);

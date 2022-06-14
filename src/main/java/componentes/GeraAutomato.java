@@ -6,7 +6,7 @@
  *          Luiz Guilherme Almas Araujo: 201676050
  */
 
-package Componentes;
+package componentes;
 
 import java.util.ArrayList;
 import java.util.HashSet;
